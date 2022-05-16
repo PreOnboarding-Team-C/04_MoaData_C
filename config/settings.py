@@ -33,11 +33,11 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.job'
+    
 ]
 
 PROJECT_APPS = [
-
+    'apps.job',
 ]
 
 THIRD_PARTY_APPS = [
