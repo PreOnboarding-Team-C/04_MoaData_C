@@ -18,29 +18,30 @@ class JsonAPI(APIView):
 
     def post(self, request):
 
-        # json_data = request.data
+        # print(f"request입니다, :  {request}")
+
         request = json.loads(request.body)
 
-        # print(json_object)
-        # print(json_object['job_id'])
-        # print(json_object['job_name'])
-        # print(json_object['task_list'])
+        with open('job.json', 'r', encoding='utf-8') as rf:
+            json_data = json.load(rf)
+            with open('job.json', 'w', encoding='utf-8') as wf:
+                json_data['job'].append({
+                    "job_id": request['job_id'],
+                    "job_name": request['job_name'],
+                    "task_list": request['task_list'],
+                    "property": request['property']
+                })
 
-        with open('job.json', 'r+', encoding='utf-8') as f:
-            json_data = json.load(f)
-            print(f"json_data 입니다. {json_data}")
-            print(json_data['job'])
-            # json_obj['job'].append(json_data)
-            
-            # json_data['job'].append({
-            #     "job_id": json_object['job_id'],
-            #     "job_name": json_object['job_name'],
-            #     "task_list": json_object['task_list'],
-            #     "property": json_object['property']
-            # })
-
-            # json_obj = json.load(f, indent=2)
-            # print(f"json_obj 입니다 {json_obj}")
-            # json_obj['job'].append(json_data)
+                json.dump(json_data, wf, indent=4)
         
+        return Response('성공')
+
+    def patch(self, request, job_id):
+
+        print(f"request.data 입니다. :  {job_id}")
+
+        request = json.loads(request.body)
+
+        print(f"request입니다, :  {request}")
+
         return Response('성공')
