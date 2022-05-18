@@ -33,11 +33,23 @@ class JobExecutor:
 
         raise Exception(f'404 : There is no Job id [{id}]')
 
+    # 현재 존재하는 job_id 인지 판별
+    def _exist_or_not(self, job_list, id):
+        for job in job_list:
+            if int(job['job_id']) == int(id):
+                return False
+        return True
+
+    def read(self, id=None):
+        return self._read_job(id)
+
     def create(self, input_job):
         job_list = self._read_all_job()
-        job_list.append(input_job)
-
-        self._write_to_csv(job_list)
+        if self._exist_or_not(job_list, input_job['job_id']):
+            job_list.append(input_job)
+            self._write_json(job_list)
+        else:
+            return "이미 존재하는 job_id 입니다."
 
     def edit(self, job_id, input_job):
         job_list = self._read_all_job()

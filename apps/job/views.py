@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from utils.job import JobExecutor, TaskExecutor
 
 
-je = JobExecutor()
+executor = JobExecutor()
 
 # Create your views here.
 class JsonAPI(APIView, JobExecutor):
@@ -15,7 +15,7 @@ class JsonAPI(APIView, JobExecutor):
     
     def get(self, request, format=None):
 
-        jobs = je._read_all_job()
+        jobs = executor._read_all_job()
 
         return Response(jobs)
 
@@ -23,7 +23,7 @@ class JsonAPI(APIView, JobExecutor):
 
         input_job = json.loads(request.body)
 
-        jobs = je.create(input_job)
+        jobs = executor.create(input_job)
 
         return Response(jobs)
 
@@ -53,7 +53,7 @@ class JsonDetailAPI(APIView, JobExecutor):
 
     def get(self, request, job_id=None):
 
-        job = je._read_job(job_id)
+        job = executor._read_job(job_id)
 
         return Response(job)
 
@@ -61,12 +61,12 @@ class JsonDetailAPI(APIView, JobExecutor):
 
         input_job = json.loads(request.body)
 
-        job = je.edit(job_id, input_job)
+        job = executor.edit(job_id, input_job)
 
         return Response(job)
 
     def delete(self, request, job_id=None):
 
-        job = je.delete(job_id)
+        job = executor.delete(job_id)
 
         return Response(job)
