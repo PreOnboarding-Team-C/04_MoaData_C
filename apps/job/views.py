@@ -4,17 +4,20 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from utils.job import JobExecutor, TaskExecutor
+
+
+je = JobExecutor()
+
 # Create your views here.
-class JsonAPI(APIView):
+class JsonAPI(APIView, JobExecutor):
+
     
     def get(self, request, format=None):
 
-        with open('job.json', 'r') as f:
+        jobs = je._read_all_job()
 
-            json_data = json.load(f)
-
-        # print(json.dumps(json_data))
-        return Response(json_data)
+        return Response(jobs)
 
     def post(self, request):
 
@@ -24,8 +27,9 @@ class JsonAPI(APIView):
 
         with open('job.json', 'r', encoding='utf-8') as rf:
             json_data = json.load(rf)
+            print(f"json_data, :  {json_data}")
             with open('job.json', 'w', encoding='utf-8') as wf:
-                json_data['job'].append({
+                json_data.append({
                     "job_id": request['job_id'],
                     "job_name": request['job_name'],
                     "task_list": request['task_list'],
@@ -36,12 +40,11 @@ class JsonAPI(APIView):
         
         return Response('성공')
 
-    def patch(self, request, job_id):
 
-        print(f"request.data 입니다. :  {job_id}")
+class JsonDetailAPI(APIView, JobExecutor):
 
-        request = json.loads(request.body)
+    def get(self, request, job_id=None):
 
-        print(f"request입니다, :  {request}")
+        job = je._read_job(job_id)
 
-        return Response('성공')
+        return Response(job)

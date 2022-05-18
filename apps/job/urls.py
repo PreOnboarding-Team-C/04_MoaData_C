@@ -1,7 +1,7 @@
 from django.urls import path
-from apps.job.views import JsonAPI
+from apps.job.views import JsonAPI, JsonDetailAPI
 
 urlpatterns = [
-    path('/json', JsonAPI.as_view()),
-    path('/json/<int:job_id>', JsonAPI.as_view()),
+    path('', JsonAPI.as_view()),
+    path('/<int:job_id>', JsonDetailAPI.as_view()),
 ]
