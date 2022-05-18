@@ -69,43 +69,34 @@ class JobExecutor:
 
     # Job Task excute functions
 
-    def run(self, task, id=None, job=False, task_excutor=None):
-        print('Run Task: ', task)
-        if not job:
-            job = self._read_job(id)
+    def run(self, job_id=None):
+        # print('Run Task: ', task)
 
-        if not task_excutor:
-            task_excutor = TaskExecutor()
+        job = self._read_job(job_id)
+        task_list = ['read']
+        # read 다음 수행될 task 추가
+        task_list.append(*job['task_list']['read']) 
 
-        # Case 1
-        if task.lower() == 'read':
-            task_excutor.read(job)
-        elif task.lower() == 'drop':
-            task_excutor.drop(job)
-        elif task.lower() == 'write':
-            task_excutor.write(job)
+        # 다음 수행될 task 가 있다면 추가
+        if task:=job['task_list'][task_list[-1]]:
+            task_list.append(*task)
 
-        # # Case 2
-        # task_fucntion = getattr(task_excutor, task.lower())
-        # task_fucntion(job)
+        task_executor = TaskExecutor()
+        for task in task_list:
+            task_function = getattr(task_executor, task)
+            task_function(job)
 
-        next_tasks = job['task_list'].get(task, [])
-        next_tasks = ["drop"]
-        for task in next_tasks:
-            self.run(task, id=None, job=job, task_excutor=task_excutor)
-
+        return task_executor.DF
 
 
 class TaskExecutor:
+
     DF = None
 
     def read(self, job):
         task = job['property']['read']
         self.DF = pd.read_csv(task['filename'], delimiter=task['sep'])
         return self.DF
-
-    def read2(self, job):
-        self.read(22)
 
     def drop(self, job):
         task = job['property']['drop']

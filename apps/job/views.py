@@ -70,3 +70,12 @@ class JsonDetailAPI(APIView, JobExecutor):
         job = executor.delete(job_id)
 
         return Response(job)
+
+
+# api/v1/jobs/<int:id>/run
+class JobTaskAPI(APIView, JobExecutor):
+
+    def get(self, request, job_id):
+        executor = JobExecutor()
+        executor.run(job_id)
+        return Response(None, status=204)
