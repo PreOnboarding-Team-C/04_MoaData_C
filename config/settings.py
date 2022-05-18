@@ -36,7 +36,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'job',
 ]
 
 THIRD_PARTY_APPS = [
