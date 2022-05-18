@@ -265,3 +265,5 @@ migrations/
 *.pdf
 *.csv
 *.ipynb
+
+job.json

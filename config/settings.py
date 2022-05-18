@@ -6,7 +6,7 @@ from pathlib import Path
 dotenv.read_dotenv('./.env')
 
 # MySQL 연결
-pymysql.install_as_MySQLdb()
+# pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +36,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'apps.jobs',
 ]
 
 THIRD_PARTY_APPS = [
@@ -81,17 +81,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("MYSQL_DATABASE"),
-        "USER": os.environ.get("MYSQL_USER"),
-        "PASSWORD": os.environ.get("MYSQL_PASSWORD"),
-        "HOST": os.environ.get("MYSQL_HOST"),
-        "PORT": os.environ.get("MYSQL_PORT"),
-        "OPTIONS": {"charset": "utf8mb4"},
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": os.environ.get("MYSQL_DATABASE"),
+#         "USER": os.environ.get("MYSQL_USER"),
+#         "PASSWORD": os.environ.get("MYSQL_PASSWORD"),
+#         "HOST": os.environ.get("MYSQL_HOST"),
+#         "PORT": os.environ.get("MYSQL_PORT"),
+#         "OPTIONS": {"charset": "utf8mb4"},
+#     }
+# }
 
 
 # Password validation
