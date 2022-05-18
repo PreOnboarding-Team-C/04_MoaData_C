@@ -23,8 +23,7 @@ class JsonAPI(APIView, JobExecutor):
 
         input_job = json.loads(request.body)
 
-        jobs = je._read_all_job()
-        jobs.append(input_job)
+        jobs = je.create(input_job)
 
         return Response(jobs)
 
@@ -63,5 +62,11 @@ class JsonDetailAPI(APIView, JobExecutor):
         input_job = json.loads(request.body)
 
         job = je.edit(job_id, input_job)
+
+        return Response(job)
+
+    def delete(self, request, job_id=None):
+
+        job = je.delete(job_id)
 
         return Response(job)

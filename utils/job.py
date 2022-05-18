@@ -24,7 +24,7 @@ class JobExecutor:
 
     def _write_to_csv(self, job):
         with open(self.FILE_PATH, 'w') as file:
-            json.dump(job, file)
+            json.dump(job, file, indent=4)
 
     def _get_index(self, job_list, id):
         for idx, job in enumerate(job_list):
@@ -47,9 +47,9 @@ class JobExecutor:
 
         self._write_to_csv(job_list)
 
-    def delete(self, id):
+    def delete(self, job_id):
         job_list = self._read_all_job()
-        job_index = self._get_index(job_list, id)
+        job_index = self._get_index(job_list, job_id)
 
         job_list.pop(job_index)
 
