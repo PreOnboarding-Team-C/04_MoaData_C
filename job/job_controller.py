@@ -1,11 +1,10 @@
-import os
 import json
 import pandas as pd
 
 
 class JobExecutor:
     '''
-    Assignee : 홍은비
+    Assignee : 홍은비, 장우경, 진병수
     Reviewer : -
     '''
     PATH = './job.json'
@@ -20,10 +19,9 @@ class JobExecutor:
                     for job in job_list:
                         if int(job['job_id']) == int(id):
                             return job
+                    raise Exception(f'404: 입력하신 [{id}] id는 존재하지 않는 id 입니다.')
                 else:
                     return job_list
-            if id:
-                raise Exception(f'404: 입력하신 [{id}] id는 존재하지 않는 id 입니다.')
 
         except Exception as e:
             raise
@@ -35,30 +33,24 @@ class JobExecutor:
 
     # job_id 에 해당하는 데이터의 index 반환
     def _get_index(self, job_list, id):
-        for idx, job in enumerate(job_list):
-            if int(job['job_id']) == int(id):
-                return idx
-
-    # 파일에 이미 존재하는 job_id 인지 판별 => 있으면 T 없으면 F
-    def _is_exist_(self, job_list, id):
-        for job in job_list:
-            if int(job['job_id']) == int(id):
-                return True
-        return False
-
-    def read(self, id=None):
         try:
-            data = self._read_job(id)
-            return data
+            for idx, job in enumerate(job_list):
+                if int(job['job_id']) == int(id):
+                    return idx
+            raise Exception(f'존재하지 않는 id')
         except Exception as e:
             raise
+
+    def read(self, id=None):
+        data = self._read_job(id)
+        return data
 
 
     # job 추가
     def create(self, input_job):
         job_list = self._read_job()
-        if self._is_exist_(job_list, input_job['job_id']):
-            raise Exception('이미 존재하는 job_id 입니다.')
+        if self._get_index(job_list, input_job['job_id']):
+            raise Exception(f'입력하신 id는 이미 존재하는 job_id 입니다.')
         else:
             job_list.append(input_job)
             self._write_json(job_list)
@@ -69,25 +61,21 @@ class JobExecutor:
             return f'job_id 값은 변경할 수 없습니다.'
         try:
             job_list = self._read_job()
+            job_index = self._get_index(job_list, id)
+            job_list[job_index] = input_job
+            self._write_json(job_list)
         except Exception as e:
-            raise
-        print('여길?')
-        job_index = self._get_index(job_list, id)
-        job_list[job_index] = input_job
-
-        self._write_json(job_list)
+            raise Exception(f'입력하신 [{id}] id 는 존재하지 않기 때문에 수정할 수 없습니다.')
 
     # job 삭제
     def delete(self, id):
         try:
             job_list = self._read_job()
+            job_index = self._get_index(job_list, id)
+            job_list.pop(job_index)
+            self._write_json(job_list)
         except Exception as e:
-            raise
-
-        job_index = self._get_index(job_list, id)
-        job_list.pop(job_index)
-
-        self._write_json(job_list)
+            raise Exception(f'입력하신 [{id}] id 는 존재하지 않기 때문에 삭제할 수 없습니다.')
 
     
     # Job Task execute function

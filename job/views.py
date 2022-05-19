@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .job_controller import JobExecutor
-from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_409_CONFLICT
+from rest_framework.status import HTTP_200_OK, HTTP_204_NO_CONTENT, HTTP_404_NOT_FOUND, HTTP_409_CONFLICT, HTTP_201_CREATED
 
 
 # api/v1/jobs [C, R]
@@ -20,7 +20,7 @@ class JobListView(APIView):
         executor = JobExecutor()
         try:
             data = executor.create(request.data)
-            return Response(request.data, status=HTTP_200_OK)
+            return Response(request.data, status=HTTP_201_CREATED)
         except Exception as e:
             return Response(str(e), status=HTTP_409_CONFLICT)
 
