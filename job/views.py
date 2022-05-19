@@ -38,7 +38,6 @@ class JobDetailRUDViews(APIView):
             return Response(data, status=HTTP_200_OK)
         except Exception as e:
             return Response(str(e), status=HTTP_404_NOT_FOUND)
-        
 
     def put(self, request, id):
         executor = JobExecutor()
@@ -47,7 +46,6 @@ class JobDetailRUDViews(APIView):
             return Response(data, status=HTTP_200_OK)
         except Exception as e:
             return Response(str(e), status=HTTP_404_NOT_FOUND)
-
 
     def delete(self, request, id):
         executor = JobExecutor()
