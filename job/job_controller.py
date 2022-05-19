@@ -42,16 +42,17 @@ class JobExecutor:
         except Exception as e:
             raise
 
+    # 유효한 job_id 값이 전달되면 디테일 조회 / 전달되지 않는다면 전체 리스트 조회
     def read(self, id=None):
         data = self._read_job(id)
         return data
-
 
     # job 추가
     def create(self, input_job):
         job_list = self._read_job()
         if self._get_index(job_list, input_job['job_id']):
             raise Exception(f'입력하신 id는 이미 존재하는 job_id 입니다.')
+
         else:
             job_list.append(input_job)
             self._write_json(job_list)
@@ -60,6 +61,7 @@ class JobExecutor:
     def update(self, id, input_job):
         if id != input_job['job_id']:
             return f'job_id 값은 변경할 수 없습니다.'
+
         try:
             job_list = self._read_job()
             job_index = self._get_index(job_list, id)
@@ -78,9 +80,7 @@ class JobExecutor:
         except Exception as e:
             raise Exception(f'입력하신 [{id}] id 는 존재하지 않기 때문에 삭제할 수 없습니다.')
 
-    
-    # Job Task execute function
-
+    # Job Task 실행 함수
     def run(self, id=None):
         job = self._read_job(id)
         task_list = ['read']
@@ -104,9 +104,8 @@ class JobExecutor:
 class TaskExecutor:
     '''
     Assignee : 홍은비
-    Reviewer : -
+    Reviewer : 장우경, 진병수
     '''
-
     DF = None
 
     # filename.csv 파일 read
