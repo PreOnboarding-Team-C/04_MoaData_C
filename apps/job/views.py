@@ -76,6 +76,8 @@ class JsonDetailAPI(APIView, JobExecutor):
 class JobTaskAPI(APIView, JobExecutor):
 
     def get(self, request, job_id):
+
         executor = JobExecutor()
-        executor.run(job_id)
-        return Response(None, status=204)
+        data = executor.run(job_id)
+        
+        return Response(data, status=204)

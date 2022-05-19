@@ -82,9 +82,12 @@ class JobExecutor:
             task_list.append(*task)
 
         task_executor = TaskExecutor()
+        
         for task in task_list:
             task_function = getattr(task_executor, task)
             task_function(job)
+
+        print(task_executor.DF)
 
         return task_executor.DF
 
