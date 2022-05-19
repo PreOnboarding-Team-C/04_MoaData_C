@@ -29,6 +29,7 @@ class JobExecutor:
     # 실제 파일에 쓰기
     def _write_json(self, job):
         with open(self.PATH, 'w', encoding='utf-8') as f:
+            # 한글처럼 ascii에 포함되지 않은 문자들도 볼 수 있도록 ensure_ascii=False 처리
             json.dump(job, f, indent=4, ensure_ascii=False)
 
     # job_id 에 해당하는 데이터의 index 반환
