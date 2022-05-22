@@ -30,7 +30,8 @@
 ## 2. Task 및 작업 분담
 ```py
 1. read - path/to/a.csv를 읽어서 pandas data frame으로 리턴하는 동작을 수행
-2. drop - “column_name”: “date” / a.csv 안의 컬럼네임 date가 있다는 가정하에 이것을 drop시킨다. / drop시킨 후 data frame을 리턴하는게 drop의 역할
+2. drop - “column_name”: “date” / a.csv 안의 컬럼네임 date가 있다는 가정하에 이것을 drop시킨다. 
+   drop시킨 후 data frame을 리턴하는게 drop의 역할
 3. write - (read-drop한 결과를) path/to/b.csv로 저장한다.
 -------------------------------------------------------------------------------------------
 # 어려운 점
