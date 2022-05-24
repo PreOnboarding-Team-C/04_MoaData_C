@@ -58,3 +58,6 @@
 | 특정 job_id 수정  | PATCH | http://127.0.0.1:8000/api/v1/jobs/<int:job_id> | - |
 | 특정 job_id 삭제  | DELETE | http://127.0.0.1:8000/api/v1/jobs/<int:job_id> | - |
 | 특정 job_id 수행  | GET | http://127.0.0.1:8000/api/v1/jobs/<int:job_id>/run | - |
+
+## 5. DFD (Data Flow Diagram)
+![img](./src/images/moadata_dfd.png)
